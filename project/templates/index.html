@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>KNN VS MKNN</title>
+    <!-- Tailwinds -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="container scroll-smooth mx-auto px-48">
+    <div class="block">
+        <div class="relative top-20 border-4">
+            <h1 class="font-bold text-2xl text-center pt-12 sm:">KNN & MKNN</h1>
+            {% if get_flashed_messages() == [] %}
+            <h1 class="font-semibold text-xl text-center pt-12">{{data.form}}</h1>
+            {% endif %}
+            {% for message in get_flashed_messages() %}
+            <h2 class="font-semibold text-xl text-center pt-12 text-red-600">{{ message }}</h2>
+            {% endfor %}
+            {% if data.form == "Masukkan Dua File (.dat) dan (.hea)" %}
+            <div class="flex flex-col justify-center items-center pt-12">
+            <form action="/upload" enctype="multipart/form-data" method="POST">
+                <input type="file" name="file" multiple>
+                <input type="submit"value="Upload" class="cursor: pointer rounded-xl hover:bg-gray-200 border-2 border-solid px-4 py-1">
+            </form>
+        </div>
+        {% endif %}
+        {% if data.form != "Masukkan Dua File (.dat) dan (.hea)" %}
+            <div class="flex justify-center pt-5">
+                <a href="{{ url_for('router_bp.home') }}" class="rounded-xl hover:bg-gray-200 border-2 px-4 py-1"><button>Reset</button></a>
+            </div>
+        <div class="flex flex-row justify-center pt-5">
+            <form action="/progress" method="post">
+                <input name="preproc" type="submit" class=" cursor: pointer hover:bg-gray-200  border-2 rounded-xl px-4 py-2 mx-3 mt-5" value="Hasil Preprocessing" >
+                <input name="clasi" type="submit" class=" cursor: pointer hover:bg-gray-200 border-2 rounded-xl px-4 py-2 mx-3 mt-5" value="Hasil Klasifikasi" >
+            </form>
+        </div>
+        
+        {% endif %}
+        <div class="flex-col justify-center border-2 py-36 my-10 px-10 mx-72">
+            {% if data.resM == "?" %}
+            <h1 class="pl-36">{{data.res}}</h1>
+            {% endif %}
+            {% if data.resM != "?" %}
+            <div class="flex-row pt-5 pl-16">
+                <h1 class="font-bold text-xl"> K-Nearest Neighbor</h1>
+                <h1 class=""> Memprediksi <b class="text-lg">{{data.res[0]}}</b></h1>
+                <h1 class=""> Accuracy =  {{data.res[1]}}%</h1>
+                <h1 class=""> Precission =  {{data.res[2]}}</h1>
+                <h1 class=""> Recall =  {{data.res[3]}}</h1>
+                <h1 class=""> F1 Score =  {{data.res[4]}}</h1>
+                <h1 class=""> Waktu Komputasi =  {{data.res[5]}} <i>second</i></h1>
+            </div>
+            <div class="flex-row pt-5 pl-16">
+                <h1 class="font-bold text-xl"> Modified K-Nearest Neighbor</h1>
+                <h1 class=""> Memprediksi <b class="text-lg">{{data.resM[0]}}</b></h1>
+                <h1 class=""> Accuracy =  {{data.resM[1]}}%</h1>
+                <h1 class=""> Precission =  {{data.resM[2]}}</h1>
+                <h1 class=""> Recall =  {{data.resM[3]}}</h1>
+                <h1 class=""> F1 Score =  {{data.resM[4]}}</h1>
+                <h1 class=""> Waktu Komputasi =  {{data.resM[5]}} <i>second</i></h1>
+            </div>
+            {% endif %}
+        </div>
+        
+        </div>
+    </div>
+    </div>
+</body>
+</html>
